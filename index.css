@@ -1,0 +1,41 @@
+/* Additional styles for the guest name section */
+#guest-name {
+	transition: all 0.3s ease;
+	text-shadow: 2px 2px 8px rgba(236, 72, 153, 0.2);
+	background: linear-gradient(135deg, #ec4899, #d946ef);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	display: inline-block;
+}
+
+#guest-name:hover {
+	text-shadow: 2px 2px 15px rgba(236, 72, 153, 0.4);
+}
+
+#guest-welcome {
+	background: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.9),
+		rgba(255, 255, 255, 0.7)
+	);
+	border: 2px solid rgba(255, 255, 255, 0.5);
+	box-shadow:
+		0 20px 40px rgba(236, 72, 153, 0.1),
+		inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Animation for the guest name container */
+@keyframes glow {
+	0%,
+	100% {
+		box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+	}
+	50% {
+		box-shadow: 0 0 40px rgba(236, 72, 153, 0.4);
+	}
+}
+
+#guest-name-container {
+	animation: glow 3s ease-in-out infinite;
+}

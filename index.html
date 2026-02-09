@@ -6,6 +6,7 @@
 		<title>Naimat Ullah Wedding Invitation</title>
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
+
 		<!-- Font Awesome Icons -->
 		<link
 			rel="stylesheet"
@@ -23,6 +24,7 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
+		<link rel="stylesheet" href="./index.css" />
 		<!-- Custom CSS -->
 		<style>
 			* {
@@ -516,6 +518,86 @@
 				</div>
 			</section>
 
+			<!-- Guest Welcome Section - Add this after the header section -->
+			<section class="py-12 px-4 relative">
+				<div class="container mx-auto max-w-6xl">
+					<!-- Guest Name Card -->
+					<div
+						id="guest-welcome"
+						class="glass-effect rounded-3xl p-8 md:p-10 shadow-2xl max-w-3xl mx-auto text-center relative overflow-hidden"
+					>
+						<!-- Background decorative elements -->
+						<div
+							class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-rose-200 to-pink-200 opacity-30"
+						></div>
+						<div
+							class="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br from-pink-200 to-rose-200 opacity-30"
+						></div>
+
+						<div class="relative z-10">
+							<!-- Icon -->
+							<div class="mb-6">
+								<i
+									class="fas fa-envelope-open-text text-4xl text-rose-500 animate__animated animate__pulse animate__infinite"
+								></i>
+							</div>
+
+							<!-- Guest Name Display -->
+							<h3 class="text-2xl md:text-3xl font-serif text-gray-700 mb-4">
+								Special Invitation for
+							</h3>
+
+							<div id="guest-name-container" class="mb-8">
+								<div class="inline-block relative">
+									<!-- Guest Name Display -->
+									<h2
+										id="guest-name"
+										class="text-4xl md:text-5xl lg:text-6xl uppercase font-elegant font-bold text-rose-800 relative px-8 py-4 rounded-xl"
+									>
+										You
+									</h2>
+								</div>
+							</div>
+
+							<!-- Welcome Message -->
+							<p
+								class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+							>
+								We are delighted to invite
+								<!-- id="guest-name-text" -->
+								<span class="font-semibold text-rose-700">you</span>
+								to share in the joy of our wedding celebration. Your presence
+								will make our special day even more memorable.
+							</p>
+
+							<!-- Decorative divider -->
+							<div class="flex items-center justify-center space-x-4 mb-8">
+								<div
+									class="w-16 h-1 bg-gradient-to-r from-transparent to-rose-300"
+								></div>
+								<i class="fas fa-heart text-rose-400"></i>
+								<div
+									class="w-16 h-1 bg-gradient-to-r from-rose-300 to-transparent"
+								></div>
+							</div>
+						</div>
+
+						<!-- Floating decorative elements -->
+						<div
+							class="absolute top-4 right-4 w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center float-animation"
+						>
+							<i class="fas fa-star text-rose-400 text-sm"></i>
+						</div>
+						<div
+							class="absolute bottom-4 left-4 w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center float-animation"
+							style="animation-delay: 1s"
+						>
+							<i class="fas fa-heart text-pink-400 text-xs"></i>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<!-- Final Message Section -->
 			<section class="py-20 px-4 relative overflow-hidden">
 				<div
@@ -544,6 +626,7 @@
 						</h3>
 
 						<div
+							id="guest-name"
 							class="text-5xl md:text-6xl font-elegant font-bold text-gray-800 mb-8"
 						>
 							Naimat Ullah
@@ -764,6 +847,91 @@
 				card.addEventListener('mouseleave', function () {
 					this.style.transform = 'translateY(0)';
 				});
+			});
+
+			// inviteation guest style
+			// Function to get query parameters from URL
+			function getQueryParams() {
+				const params = {};
+				const queryString = window.location.search.substring(1);
+				const regex = /([^&=]+)=([^&]*)/g;
+				let match;
+
+				while ((match = regex.exec(queryString)) !== null) {
+					params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+				}
+
+				return params;
+			}
+
+			// Function to fetch and display guest name
+			function displayGuestName() {
+				const params = getQueryParams();
+				const guestNameElement = document.getElementById('guest-name');
+				const guestNameTextElement = document.getElementById('guest-name-text');
+
+				if (params.guest && params.guest.trim() !== '') {
+					// Decode the guest name (handles URL encoding like %20 for spaces)
+					const guestName = decodeURIComponent(params.guest).trim();
+
+					// Display the guest name
+					guestNameElement.textContent = guestName;
+					guestNameTextElement.textContent = guestName;
+
+					// Add special animation for guest name
+					guestNameElement.classList.add(
+						'animate__animated',
+						'animate__bounceIn',
+					);
+
+					// Change background color slightly for personalization
+					guestNameElement.parentElement.parentElement.style.background =
+						'linear-gradient(135deg, rgba(253, 242, 248, 0.9), rgba(252, 231, 243, 0.9))';
+
+					// Optional: Store in localStorage to remember the guest
+					try {
+						localStorage.setItem('weddingGuest', guestName);
+					} catch (e) {
+						console.log('Local storage not available');
+					}
+
+					// Log for debugging (optional)
+					console.log(`Welcome, ${guestName}!`);
+				} else {
+					// Check if guest name was previously stored
+					try {
+						const storedGuest = localStorage.getItem('weddingGuest');
+						if (storedGuest) {
+							guestNameElement.textContent = storedGuest;
+							guestNameTextElement.textContent = storedGuest;
+							guestNameElement.classList.add(
+								'animate__animated',
+								'animate__fadeIn',
+							);
+						}
+					} catch (e) {
+						console.log('Local storage not available');
+					}
+				}
+
+				// Add hover effect to guest name
+				guestNameElement.addEventListener('mouseenter', function () {
+					this.style.transform = 'scale(1.05)';
+					this.style.transition = 'transform 0.3s ease';
+				});
+
+				guestNameElement.addEventListener('mouseleave', function () {
+					this.style.transform = 'scale(1)';
+				});
+			}
+
+			// Call the function when page loads
+			document.addEventListener('DOMContentLoaded', displayGuestName);
+
+			// Alternative: Call after all elements are loaded
+			window.addEventListener('load', function () {
+				// Small delay for better visual effect
+				setTimeout(displayGuestName, 500);
 			});
 		</script>
 	</body>
